@@ -1,0 +1,2 @@
+On evWindowClick
+	Quit event handler (Discard event)     ;; prevent clicking behind this window into the class browser

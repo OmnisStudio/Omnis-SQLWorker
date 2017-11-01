@@ -1,0 +1,10 @@
+Set reference ref to $sessionpools.MyPool
+If len(ref)
+	Do $sessionpools.$remove(ref) Returns #F
+End If
+
+;  uncomment code below once ST/*L/024 is fixed (801-002)
+;  Set reference ref to $sessions.SQLWORKER
+;  If len(ref)
+;  Do ref.$logoff() Returns #F
+;  End If

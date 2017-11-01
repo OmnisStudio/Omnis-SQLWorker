@@ -1,0 +1,6 @@
+;  Enter your initialization code here
+
+Do $topwind.$getContextLine Returns lLine
+If lLine=0
+	Do $cinst.$objs.Delete.$enabled.$assign(kFalse)
+End If
