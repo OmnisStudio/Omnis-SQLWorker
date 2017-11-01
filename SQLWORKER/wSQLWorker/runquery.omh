@@ -1,0 +1,58 @@
+;  connect, define worker initialization variable paramsrow (adding connection details, queries and bind variables) and start worker object
+
+Do method clearResults
+
+Switch iConnectionTypes.$line
+	Case 1     ;; hostname, username and password
+		Do paramsrow.$define(hostname,database,username,password,work,jdbcdriver)
+		Do paramsrow.$assigncols(iHostname,iUsername,iPassword)
+		
+	Case 2     ;; session pool
+		Do paramsrow.$define(poolname,work)
+		Calculate paramsrow.poolname as 'MyPool'
+		Set reference ref to $sessionpools.[paramsrow.poolname]
+		If len(ref)=0
+			Do method openSessionPool (paramsrow.poolname,5,iHostname,'','') Returns #F
+		End If
+		
+	Case 3     ;; session reference
+		Do paramsrow.$define(session,work)
+		Set reference ref to $sessions.SQLWORKER
+		If len(ref)=0
+			Do iSessObj.$logon(iHostname,iUsername,iPassword,'SQLWORKER')
+		End If
+		Calculate paramsrow.session as $sessions.SQLWORKER.$sessionobjref
+End Switch
+
+;  define bind variables list and add values
+For iBindVars.$line from 1 to iBindVars.$linecount step 1
+	Do iBindVars.$loadcols()
+	If len(iBindVarName)
+		Do bindvars.$cols.$add(iBindVarName,kCharacter,kSimplechar)
+		If bindvars.$linecount=0
+			Do bindvars.$add()
+		End If
+		Calculate bindvars.1.[iBindVarName] as iBindVarValue
+	End If
+End For
+
+;  add queries and bind variables to paramsrow
+Do work.$define(query,bindvars)
+For iQueries.$line from 1 to iQueries.$linecount step 1
+	Do iQueries.$loadcols()
+	Do work.$add(iQuery,bindvars)
+End For
+Calculate paramsrow.work as work
+
+Do iWorkerObj.$cancelifrunning.$assign(kTrue)
+Do iWorkerObj.$waitforcomplete.$assign(kFalse)
+Do iWorkerObj.$init(paramsrow) Returns flag
+If flag
+	Do iWorkerObj.$setCallingInst($cinst)
+	Do iWorkerObj.$start() Returns #F
+	
+	Do $cinst.$objs.Start.$enabled.$assign(kFalse)
+	Do $cinst.$objs.Cancel.$enabled.$assign(kTrue)
+Else
+	OK message SQL Worker {[iWorkerObj.$errorcode], [iWorkerObj.$errortext].}
+End If

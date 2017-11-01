@@ -1,0 +1,36 @@
+;  display results, add additional panes to tab pane for multiple result sets.
+
+Calculate iResults as pRow.C1
+Calculate iErrors as pRow.C2
+
+Do $cinst.$objs.ResultsPane.$tabcount.$assign(iResults.$linecount)
+For lCount from 1 to iResults.$linecount step 1
+	Do $cinst.$objs.ResultsPane.$currenttab.$assign(lCount)
+	Do $cinst.$objs.ResultsPane.$tabcaption.$assign(con('Query ',iResults.[lCount].QueryNum))
+	
+	Calculate lObjName as con('Grid',lCount)
+	Set reference lRef to $cinst.$objs.ResultsPane.$objs.[lObjName]
+	If len(lRef)=0
+		Do $cinst.$objs.ResultsPane.$objs.$add(lCount,kDataGrid,10,10,200,500) Returns lRef
+		Do lRef.$name.$assign(lObjName)
+		Do lRef.$fieldstyle.$assign('CtrlDataGrid')
+		Do lRef.$defaultheight.$assign(16)
+		Do lRef.$edgefloat.$assign(kEFposnClient)
+		Do lRef.$gridendcolor.$assign(kWhite)
+		Do lRef.$vertscroll.$assign(kTrue)
+		Do lRef.$horzscroll.$assign(kTrue)
+		
+		Calculate lVarName as con('iResults.',lCount,'.1')
+		Do lRef.$dataname.$assign(lVarName)
+	End If
+End For
+
+Do $cinst.$objs.ResultsPane.$currenttab.$assign(1)
+If iResults.$linecount>0     ;; show results
+	Do $cinst.$objs.MainPane.$currenttab.$assign(2)
+Else If iErrors.$linecount>0     ;; show errors
+	Do $cinst.$objs.MainPane.$currenttab.$assign(3)
+End If
+Do $cinst.$objs.Start.$enabled.$assign(kTrue)
+Do $cinst.$objs.Cancel.$enabled.$assign(kFalse)
+Do $cinst.$redraw()

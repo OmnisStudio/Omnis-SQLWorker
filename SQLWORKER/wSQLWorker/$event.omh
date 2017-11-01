@@ -1,0 +1,7 @@
+On evCloseBox
+	If iWorkerObj.$state=kWorkerStateRunning
+		No/Yes message SQL Worker {$state = [iWorkerObj.$state], close window?}
+		If flag false
+			Quit event handler (Discard event)
+		End If
+	End If

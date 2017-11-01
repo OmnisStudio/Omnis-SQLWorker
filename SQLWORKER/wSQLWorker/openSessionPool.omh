@@ -1,0 +1,3 @@
+;  called by runquery if sessionpool does not already exist
+
+Do $extobjects.SQLITEDAM.$objects.SQLITESESS.$makepool(pPoolName,pPoolSize,pPoolHostname,pPoolUsername,pPoolPassword) Returns #F

@@ -1,0 +1,9 @@
+;  called by context menu
+
+If iContextObjName='Queries'
+	Do iQueries.$remove(iContextLine)
+Else     ;; bind variables
+	Do iBindVars.$remove(iContextLine)
+End If
+
+Do $cinst.$redraw()

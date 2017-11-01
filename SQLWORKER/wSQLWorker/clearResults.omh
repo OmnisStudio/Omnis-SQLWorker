@@ -1,0 +1,5 @@
+Do $cinst.$objs.ResultsPane.$tabcount.$assign(1)
+Do iResults.$clear()
+Do iErrors.$clear()
+
+Do $cinst.$redraw()

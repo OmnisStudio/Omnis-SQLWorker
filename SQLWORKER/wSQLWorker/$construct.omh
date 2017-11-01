@@ -1,0 +1,23 @@
+;  Enter your initialization code here
+
+Do iConnectionTypes.$define(iConnectionMethod)
+Do iConnectionTypes.$add('Logon Details')
+Do iConnectionTypes.$add('Session Pool')
+Do iConnectionTypes.$add('Session Object Reference')     ;; only works first time (ST/*L/024), fixed in 801-002.
+Do iConnectionTypes.$line.$assign(1)
+
+;  sqlite connections details
+Calculate iHostname as replace(low(sys(10)),'.lbs','.db')
+Calculate iUsername as ''
+Calculate iPassword as ''
+
+;  default queries and bind variables
+Do iQueries.$define(iQuery)
+Do iQueries.$add('SELECT * FROM mytable')
+Do iQueries.$add('SELECT * FROM mytable WHERE my_id <= @[bindvars.bind1]')
+Do iQueries.$add('SELECT * FROM mytable WHERE my_ycode > @[bindvars.bind2]')
+Do iQueries.$add("SELECT mytable.my_id, mytable.my_xcode, mytable.my_ycode, mytable.my_zcode, table2.my_id 'my_id2', table2.my_xcode 'my_xcode2', table2.my_ycode 'my_ycode2', table2.my_zcode 'my_zcode2' FROM mytable, mytable 'table2'")
+
+Do iBindVars.$define(iBindVarName,iBindVarValue)
+Do iBindVars.$add('bind1',10)
+Do iBindVars.$add('bind2','Y00010')

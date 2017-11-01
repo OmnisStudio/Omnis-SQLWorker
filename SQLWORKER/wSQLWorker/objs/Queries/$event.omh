@@ -1,0 +1,4 @@
+On evRMouseDown     ;; st/wo/2370, evOpenContextMenu
+	Calculate iContextLine as mouseover(kMLine)
+	Calculate iContextObjName as $cobj.$name
+	Do $cobj.$gridvcell.$assign(iContextLine+1)     ;; set line in grid

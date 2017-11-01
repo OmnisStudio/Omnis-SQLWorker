@@ -1,0 +1,9 @@
+;  called by context menu
+
+If iContextObjName='Queries'
+	Do iQueries.$add()
+Else     ;; bind variables
+	Do iBindVars.$add()
+End If
+
+Do $cinst.$redraw()

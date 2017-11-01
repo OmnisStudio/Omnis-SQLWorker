@@ -1,0 +1,4 @@
+;  show worker is cancelled
+
+OK message SQL Worker {$state = [iWorkerObj.$state].}
+Do $cinst.$objs.Start.$enabled.$assign(kTrue)
