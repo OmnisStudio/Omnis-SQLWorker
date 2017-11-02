@@ -5,6 +5,8 @@ http://www.omnis.net/documentation/programming/index.jsp?detail=07sqlprog.html#s
 
 For Omnis Studio 8.1.2 and above.
 
+The sqlworker.db file contains the data and needs to be placed at the same level as the library.
+
 ## Contents
 ### SQLWorker
 This folder contains the source JSON files for the Omnis library in Github. 
