@@ -5,7 +5,7 @@ http://www.omnis.net/technotes/tnsq0035.jsp
 
 For Omnis Studio 8.1.2 and above.
 
-The sqlworker.db file contains the data and needs to be placed at the same level as the library.
+The sqlworker.db file contains the data and needs to be placed at the same level as the imported library.
 
 ## Contents
 ### SQLWorker
