@@ -1,7 +1,7 @@
 # Omnis-SQLWorker
 Omnis library to demo the use of SQL Worker Objects.
 For further info:
-http://www.omnis.net/documentation/programming/index.jsp?detail=07sqlprog.html#sql-multi-tasking-and-sql-workers
+http://www.omnis.net/technotes/tnsq0035.jsp
 
 For Omnis Studio 8.1.2 and above.
 
